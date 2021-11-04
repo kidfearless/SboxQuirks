@@ -7,6 +7,10 @@ This document is intended to give a quick reference to some of the quirks and fe
 ## [General]
 Entities aren't always available on the client, it *might* be due to their transmission state.
 
+There's a `-dedicated` launch option to launch the game as a server, but it doesn't seem to work right now.
+
+A lot of .NET 5 is restricted through a whitelist system. It can be opened up through the whitelist config, but how that will work on the client is yet to be seen.
+
 ## [UI]
 
 There is only one hud entity, it's networked to the client but it isn't per client for all intents and purposes.
