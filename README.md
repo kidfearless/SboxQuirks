@@ -57,3 +57,5 @@ public void DoSomething()
 For inputs you currently have to implement 2 console commands as both `+input` and `-input`
 
 Only clients can process `Input.GetKeyWithBinding`, specifically client commands and client menus
+
+Custom input commands from sm are essentially impossible in S&box. You are forced to use the `Input` class to check the state of key presses within the `Simulate` override.
