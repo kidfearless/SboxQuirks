@@ -11,6 +11,8 @@ There's a `-dedicated` launch option to launch the game as a server, but it does
 
 A lot of .NET 5 is restricted through a whitelist system. It can be opened up through the whitelist config, but how that will work on the client is yet to be seen.
 
+The entity scale doesn't determine the size of the entity, it more so determines it's mass. see `Entity.PhysicsBody.Mass`
+
 ## [UI]
 
 There is only one hud entity, it's networked to the client but it isn't per client for all intents and purposes.
