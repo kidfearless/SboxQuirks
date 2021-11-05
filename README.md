@@ -11,7 +11,7 @@ There's a `-dedicated` launch option to launch the game as a server, but it does
 
 A lot of .NET 5 is restricted through a whitelist system. It can be opened up through the whitelist config, but how that will work on the client is yet to be seen.
 
-The entity scale doesn't determine the size of the entity, it more so determines it's mass. see `Entity.PhysicsBody.Mass`
+The `Entity.Scale` property doesn't determine the size of the entity, it more so determines it's mass. see `Entity.PhysicsBody.Mass`. You must change `Entity.LocalScale` in order to change how the client size.
 
 ## [UI]
 
@@ -35,11 +35,11 @@ Linear gradient doesn’t use deg, it uses % and can’t specify stopping points
 
 ## [Commands]
 
-Garry in his infinite knowledge has decided to check default keybinds every tick for every player in order to implement commands. Seeing how that’s stupid here is how you implement console commands.
+Garry in his infinite knowledge has decided to check default keybinds every tick for every player in order to implement commands. Seeing how that’s stupid here is how you implement console input commands. Input commands need to be prefixed with a `+iv_` or `-iv_` in order for the minus command to be sent
   
 ```c#
 // this has to be static, can also pass parameters if they are convertable from a string
-[ServerCmd("command name here")]  
+[ServerCmd("+iv_dosomething")]  
 public static void ServerCommand_Callback()  
 {
 	// the pawn can sometimes be null here just like how the client can be 0 in SM
@@ -51,21 +51,26 @@ public static void ServerCommand_Callback()
 	// this will call it on both the server and the client instantly if it's rpc'd
 	player.DoSomething();
 }
+
+[ServerCmd("-iv_dosomething")]  
+public static void ServerCommand_Callback()  
+{
+	if(ConsoleSystem.Caller.Pawn is not KFPlayer player)
+	{
+		return;
+	}  
+	player.DoSomethingMinus();
+}
 //... inside the player class
 
 // this isn't required to be static
 [ClientRPC]
-public void DoSomething()
-{
-}
+public void DoSomething(){}
+[ClientRPC]
+public void DoSomethingMinus(){}
 ```
 
-For inputs you currently have to implement 2 console commands as both `+input` and `-input`
-
 Only clients can process `Input.GetKeyWithBinding`, specifically client commands and client menus
-
-Custom input commands from sm are essentially impossible in S&box. You are forced to use the `Input` class to check the state of key presses within the `Simulate` override.
-
 
 ## [Movement]
 Movement vectors are no longer on a scale of -450 to 450. Instead are in a scale of -1 to 1.
