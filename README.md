@@ -63,3 +63,9 @@ For inputs you currently have to implement 2 console commands as both `+input` a
 Only clients can process `Input.GetKeyWithBinding`, specifically client commands and client menus
 
 Custom input commands from sm are essentially impossible in S&box. You are forced to use the `Input` class to check the state of key presses within the `Simulate` override.
+
+
+## [Movement]
+Movement vectors are no longer on a scale of -450 to 450. Instead are in a scale of -1 to 1.
+
+Angles are no longer stored as a QAngle/Vector3 but instead are now a Quaternion/Rotation object. You can use `EyeRot.Angles();` to access them as an angle and the `Rotation.From( myAngle );` to assign the rotation back.
