@@ -13,6 +13,12 @@ A lot of .NET 5 is restricted through a whitelist system. It can be opened up th
 
 The `Entity.Scale` property doesn't determine the size of the entity, it more so determines it's mass. see `Entity.PhysicsBody.Mass`. You must change `Entity.LocalScale` in order to change how the client size.
 
+You can access private fields, properties, and methods using reflection, and optimize them by compiling a delegate from `MethodInfo.CreateDelegate()`. Current performance with this is up to 12-24 times slower than accessing a property directely so still avoid it when possible.
+
+You cannot iterate through types in an assembly as the Assembly class is blocked.
+
+You cannot write to files within the addon folder you have to write to the data folder.
+
 ## [UI]
 
 There is only one hud entity, it's networked to the client but it isn't per client for all intents and purposes.
