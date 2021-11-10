@@ -19,6 +19,10 @@ You cannot iterate through types in an assembly as the Assembly class is blocked
 
 You cannot write to files within the addon folder you have to write to the data folder.
 
+## [Networking]
+
+Unmanaged types are the easiest type to network, simply add [Net] to the property and it will be networked. managed types can be networked if they are inside a BaseNetworkable. You should not pass / copy the properties of a BaseNetworkable instance to another. 
+
 ## [UI]
 
 There is only one hud entity, it's networked to the client but it isn't per client for all intents and purposes.
