@@ -3,6 +3,7 @@
 
 This document is intended to give a quick reference to some of the quirks and features that S&box(sbox from here on) has. Hopefully it will save some headaches in the future when more people start programming more.
 
+Assume most methods are only ran on the server, as that seems to be the default. A notable exception to this is instead the constructor of an Entity. Even if a property is networked and available to the client, the code that references it might not be running on the client.
 
 ## [General]
 Entities aren't always available on the client, it *might* be due to their transmission state.
