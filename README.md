@@ -1,4 +1,5 @@
 
+
 # [Introduction]
 
 This document is intended to give a quick reference to some of the quirks and features that S&box(sbox from here on) has. Hopefully it will save some headaches in the future when more people start programming more.
@@ -14,7 +15,7 @@ A lot of .NET 5 is restricted through a whitelist system. It can be opened up th
 
 The `Entity.Scale` property doesn't determine the size of the entity, it more so determines it's mass. see `Entity.PhysicsBody.Mass`. You must change `Entity.LocalScale` in order to change how the client size.
 
-You can access private fields, properties, and methods using reflection, and optimize them by compiling a delegate from `MethodInfo.CreateDelegate()`. Current performance with this is up to 12-24 times slower than accessing a property directely so still avoid it when possible.
+You can access private properties, and methods using reflection, and optimize them by compiling a delegate from `MethodInfo.CreateDelegate()`. Current performance with this is up to 12-24 times slower than accessing a property directely so still avoid it when possible.
 
 You cannot iterate through types in an assembly as the Assembly class is blocked.
 
@@ -23,6 +24,32 @@ You cannot write to files within the addon folder you have to write to the data 
 ## [Networking]
 
 Unmanaged types are the easiest type to network, simply add [Net] to the property and it will be networked. managed types can be networked if they are inside a BaseNetworkable. You should not pass / copy the properties of a BaseNetworkable instance to another. 
+
+Networked entities like the model entity can define custom constructors, but must have a default constructor. This is because the default constructor is called on the client no matter what.
+```c#
+// needs to be partial for [Net] attributes
+public partial class NetworkExample : AnimEntity
+{
+	[Net, Change]
+	public string NetworkVariable { get; set; }
+
+	public void OnNetworkVariableChanged( string oldvalue, string newvalue )
+	{
+		// this will be fired on the client when the server assigns NetworkVariable in the constructor
+	}
+
+	public NetworkExample()
+	{
+		// this will be called on the client.
+	}
+
+	public NetworkExample(string parameter)
+	{
+		// this will be called on the server
+		this.NetworkVariable = parameter;
+	}
+}
+```
 
 ## [UI]
 
