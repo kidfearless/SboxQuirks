@@ -114,3 +114,7 @@ Only clients can process `Input.GetKeyWithBinding`, specifically client commands
 Movement vectors are no longer on a scale of -450 to 450. Instead are in a scale of -1 to 1.
 
 Angles are no longer stored as a QAngle/Vector3 but instead are now a Quaternion/Rotation object. You can use `EyeRot.Angles();` to access them as an angle and the `Rotation.From( myAngle );` to assign the rotation back.
+
+# [2024-12-09]
+## [Character Controller]
+Avoid scaling game entities directly, this will break the physics of the some components like the character controller. Since the box model does not have directly editable dimensions it's probably best to switch to a brush model and tweak that.
